@@ -1,7 +1,9 @@
-<nav>
-	<a href="/">Home</a>
-	<a href="/about">About</a>
-	<a href="/settings">Settings</a>
-</nav>
+<script>
+	import '../app.scss';
+	import { Navbar } from '$lib/components';
+</script>
 
-<slot></slot>
+<Navbar />
+<div class="container is-fluid">
+	<slot />
+</div>

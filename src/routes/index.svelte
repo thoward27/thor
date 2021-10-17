@@ -1,5 +1,9 @@
+<script>
+	import { Title } from '$lib/components';
+</script>
+
 <svelte:head>
-    <title>Thor Fitness</title>
+	<title>Thor Fitness</title>
 </svelte:head>
 
-<h1>Welcome to Thor Fitness</h1>
+<Title title="Workouts" />
