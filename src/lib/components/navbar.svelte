@@ -48,7 +48,7 @@
 		<div class="navbar-start">
 			<a href="/" class="navbar-item"> Workout </a>
 
-			<a href="/" class="navbar-item"> History </a>
+			<a href="/history" class="navbar-item"> History </a>
 
 			<div class="navbar-item has-dropdown is-hoverable">
 				<a href="/settings" class="navbar-link  is-active"> More </a>
