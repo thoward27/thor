@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import type { IGunChainReference } from 'gun/types/chain';
 	import { onMount } from 'svelte';
 
-	let user;
+	let user: IGunChainReference;
 	onMount(async () => {
-		user = (await import('$lib/gunSetup')).user;
+		user = (await import('$lib/db')).user;
 	});
 
-	export let signup: boolean = false;
+	export let signup = false;
 
 	let username: string;
 	let password: string;
