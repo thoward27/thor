@@ -13,7 +13,7 @@ export const user = db.user().recall({ sessionStorage: true });
 user.get('alias').on((v) => username.set(v));
 // @ts-ignore
 db.on('auth', async () => {
-	const alias = await user.get('alias');
+	const alias = user.get('alias');
 	// @ts-ignore
 	username.set(alias);
 });

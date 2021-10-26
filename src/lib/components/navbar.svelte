@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { username } from '$lib/stores';
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import type { IGunChainReference } from 'gun/types/chain';
 
-	let user;
+	// Whether the extended menu is shown on mobile.
+	let menu = false;
+
+	let user: IGunChainReference;
 	onMount(async () => {
-		user = (await import('$lib/gunSetup')).user;
+		user = (await import('$lib/db')).user;
 	});
 
 	function logout() {
 		user.leave();
 		username.set('');
-	}
-
-	let menuActive = '';
-	function toggleMenu() {
-		menuActive = menuActive ? '' : 'is-active';
 	}
 </script>
 
@@ -32,11 +32,12 @@
 
 		<button
 			role="button"
-			class="navbar-burger {menuActive}"
+			class:is-active={menu}
+			class="navbar-burger"
 			aria-label="menu"
 			aria-expanded="false"
 			data-target="navbar"
-			on:click={toggleMenu}
+			on:click={() => (menu = !menu)}
 		>
 			<span aria-hidden="true" />
 			<span aria-hidden="true" />
@@ -44,39 +45,82 @@
 		</button>
 	</div>
 
-	<div id="navbar" class="navbar-menu {menuActive}">
+	<div id="navbar" class:is-active={menu} class="navbar-menu">
 		<div class="navbar-start">
-			<a href="/" class="navbar-item"> Workout </a>
+			<a href="/" class="navbar-item" class:is-active={$page.path.startsWith('/workout')}>
+				Workout
+			</a>
 
-			<a href="/history" class="navbar-item"> History </a>
-
-			<div class="navbar-item has-dropdown is-hoverable">
-				<a href="/settings" class="navbar-link  is-active"> More </a>
-
-				<div class="navbar-dropdown">
-					<a href="/settings/profile" class="navbar-item"> Settings </a>
-					<a href="/settings/notifications" class="navbar-item"> Profile </a>
-					<hr class="navbar-divider" />
-					<a href="/about" class="navbar-item"> About </a>
-					<hr class="navbar-divider" />
-					<a href="/report" class="navbar-item"> Report an issue </a>
-				</div>
-			</div>
+			<!-- TODO: <a href="/history" class="navbar-item" class:is-active={$page.path.startsWith('/history')}>
+				History
+			</a> -->
 		</div>
 
 		<div class="navbar-end">
-			<div class="navbar-item">
-				<div class="buttons">
-					{#if $username}
-						<button class="button is-light" on:click={logout}> Log Out </button>
-					{:else}
-						<a href="/signup" class="button is-primary">
+			{#if $username}
+				<div class="navbar-item has-dropdown is-hoverable is-vcentered mr-3">
+					<p class="navbar-link is-hidden-touch">
+						<figure class="image">
+							<img
+								src="https://avatars.dicebear.com/api/identicon/{username}.svg"
+								alt="user icon"
+								class="is-rounded is-24x24"
+							/>
+						</figure>
+					</p>
+
+					<div class="navbar-dropdown is-right">
+						<a
+							href="/settings"
+							class="navbar-item"
+							class:is-active={$page.path.startsWith('/settings')}
+						>
+							Settings
+						</a>
+						<hr class="navbar-divider" />
+						<a
+							href="/data/export"
+							class="navbar-item"
+							class:is-active={$page.path.startsWith('/data/export')}
+						>
+							Export Data
+						</a>
+						<a
+							href="/data/import"
+							class="navbar-item"
+							class:is-active={$page.path.startsWith('/data/import')}
+						>
+							Import Data
+						</a>
+						<hr class="navbar-divider" />
+						<a href="/about" class="navbar-item" class:is-active={$page.path.startsWith('/about')}>
+							About
+						</a>
+						<hr class="navbar-divider" />
+						<a href="/help" class="navbar-item" class:is-active={$page.path.startsWith('/help')}>
+							Help
+						</a>
+						<hr class="navbar-divider" />
+						<!-- svelte-ignore a11y-missing-attribute -->
+						<a role="button" class="navbar-item" on:click={logout}>Sign out</a>
+					</div>
+				</div>
+			{:else}
+				<div class="navbar-item">
+					<div class="buttons">
+						<a href="/auth/signin" class="button is-light"> Sign in </a>
+						<a href="/auth/signup" class="button is-primary">
 							<strong>Sign up</strong>
 						</a>
-						<a href="/login" class="button is-light"> Log in </a>
-					{/if}
+					</div>
 				</div>
-			</div>
+			{/if}
 		</div>
 	</div>
 </nav>
+
+<style>
+	img.is-rounded {
+		border: 1pt solid black;
+	}
+</style>

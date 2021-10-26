@@ -1,1 +1,5 @@
-<h2>Notifications</h2>
+<script>
+	import { Subtitle } from '$lib/components';
+</script>
+
+<Subtitle text="Notifications" />

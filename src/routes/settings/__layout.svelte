@@ -1,9 +1,43 @@
 <!-- src/routes/settings/__layout.svelte -->
-<h1>Settings</h1>
+<script>
+	import { Title } from '$lib/components';
+	import { page } from '$app/stores';
+</script>
 
-<div class="submenu">
-	<a href="/settings/profile">Profile</a>
-	<a href="/settings/notifications">Notifications</a>
+<Title title="Settings" />
+
+<div class="columns">
+	<div class="column is-one-quarter">
+		<div class="box">
+			<aside class="menu">
+				<p class="menu-label">General</p>
+				<ul class="menu-list">
+					<li>
+						<a
+							href="/settings/profile"
+							class:is-active={$page.path.startsWith('/settings/profile')}
+						>
+							Profile
+						</a>
+					</li>
+				</ul>
+				<p class="menu-label">Administration</p>
+				<ul class="menu-list">
+					<li>
+						<a
+							href="/settings/notifications"
+							class:is-active={$page.path.startsWith('/settings/notifications')}
+						>
+							Notifications
+						</a>
+					</li>
+				</ul>
+			</aside>
+		</div>
+	</div>
+	<div class="column">
+		<div class="box">
+			<slot />
+		</div>
+	</div>
 </div>
-
-<slot />
