@@ -1,6 +1,7 @@
 <!-- Component to render a single set in a workout. -->
 <script lang="ts">
 	import { Icon } from '$lib/components';
+	import { prevent_default } from 'svelte/internal';
 	import { slide } from 'svelte/transition';
 	// Whether set details are shown.
 	let details = false;
@@ -14,6 +15,8 @@
 	export let created_at: Date;
 
 	let _created_at = new Date(created_at);
+
+	$: weightSum = modifiers.reduce((prev, obj) => (Number(obj.variant) || 0) + prev, 0);
 
 	/**
 	 * Toggle whether the editing modal is visible.
@@ -41,7 +44,19 @@
 
 <div class="card">
 	<header class="card-header" on:click|stopPropagation={toggleDetails}>
-		<p class="card-header-title">{reps}x {exercise}</p>
+		<div class="card-header-title">
+			<div class="tags">
+				<span class="tag is-medium is-rounded">
+					{exercise}
+				</span>
+				<span class="tag is-rounded">
+					{reps} reps
+				</span>
+				<span class="tag is-rounded">
+					{weightSum} lbs
+				</span>
+			</div>
+		</div>
 		<button class="card-header-icon" on:click|stopPropagation={toggleModal}>
 			<Icon icon="edit" />
 		</button>
