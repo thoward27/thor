@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Title, Icon } from '$lib/components';
 	import { Set as SetComponent } from '$lib/components';
-	import { workout } from '$lib/stores';
+	import { workout, workouts } from '$lib/stores';
 	import { workout as newWorkout, createSet, duplicateSet } from '$lib/interfaces';
+	import clone from 'just-clone';
 
 	function addSet() {
 		// Simply adds a set to the end of the workout.
@@ -29,6 +30,10 @@
 			$workout.sets[index].removed = true;
 			console.log($workout);
 		};
+	}
+	function finish() {
+		$workouts = [...$workouts, clone($workout)];
+		reset();
 	}
 </script>
 
@@ -67,7 +72,18 @@
 		<Icon icon="add" />
 		<span> Add Set </span>
 	</button>
-	<button class="button is-danger" on:click={reset}>Reset</button>
+	<button class="button is-danger" on:click={reset}>
+		<Icon icon="delete" />
+		<span>
+			Reset
+		</span>
+	</button>
+	<button class="button is-success" on:click={finish}>
+		<Icon icon="check_circle_outline" />
+		<span>
+			Finish
+		</span>
+	</button>
 {:else}
 	<button class="button is-success" on:click={addSet}>Start Workout</button>
 {/if}

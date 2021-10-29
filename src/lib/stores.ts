@@ -17,3 +17,9 @@ export const workout = writable<Workout>(
 workout.subscribe((value) =>
 	browser ? localStorage.setItem('workout', JSON.stringify(value)) : null
 );
+
+// Historical workouts.
+export const workouts = writable<Workout[]>((browser && JSON.parse(localStorage.getItem('workouts'))) || []);
+workouts.subscribe((value) =>
+	browser ? localStorage.setItem('workouts', JSON.stringify(value)) : null
+);

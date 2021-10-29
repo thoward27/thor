@@ -1,6 +1,6 @@
 <script>
 	import { Icon, Title } from '$lib/components';
-	import { workout } from '$lib/stores';
+	import { workouts } from '$lib/stores';
 
 	let files;
 	$: file = files ? files[0] : null;
@@ -17,7 +17,7 @@
 	}
 
 	function set() {
-		$workout = upload;
+		$workouts = upload;
 	}
 </script>
 
