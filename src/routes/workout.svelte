@@ -68,6 +68,7 @@
 			</div>
 		{/if}
 	{/each}
+	<div class="block mt-6">
 	<button class="button is-success" on:click={addSet}>
 		<Icon icon="add" />
 		<span> Add Set </span>
@@ -84,6 +85,14 @@
 			Finish
 		</span>
 	</button>
+	</div>
 {:else}
 	<button class="button is-success" on:click={addSet}>Start Workout</button>
 {/if}
+
+<style>
+	.column {
+		padding-bottom: 0 !important;
+		padding-top: 5px !important;
+	}
+</style>
