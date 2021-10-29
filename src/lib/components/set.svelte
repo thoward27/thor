@@ -3,7 +3,7 @@
 	import { Icon } from '$lib/components';
 	import { slide } from 'svelte/transition';
 	// Whether set details are shown.
-	let details = true;
+	let details = false;
 	// Whether the set modal is shown.
 	let modal = false;
 
@@ -39,14 +39,11 @@
 
 <svelte:window on:keyup={keyup} />
 
-<div class="card mb-2">
-	<header class="card-header">
+<div class="card">
+	<header class="card-header" on:click|stopPropagation={toggleDetails}>
 		<p class="card-header-title">{reps}x {exercise}</p>
 		<button class="card-header-icon" on:click|stopPropagation={toggleModal}>
 			<Icon icon="edit" />
-		</button>
-		<button class="card-header-icon" aria-label="more options" on:click={toggleDetails}>
-			<Icon icon={!details ? 'keyboard_arrow_down' : 'keyboard_arrow_up'} />
 		</button>
 	</header>
 	{#if details}
