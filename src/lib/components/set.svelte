@@ -1,22 +1,20 @@
 <!-- Component to render a single set in a workout. -->
 <script lang="ts">
 	import { Icon } from '$lib/components';
-	import { prevent_default } from 'svelte/internal';
 	import { slide } from 'svelte/transition';
+	import type { Set } from '$lib/interfaces';
+
 	// Whether set details are shown.
 	let details = false;
 	// Whether the set modal is shown.
 	let modal = false;
 
 	// Props.
-	export let exercise: string;
-	export let reps: number;
-	export let modifiers = [];
-	export let created_at: Date;
+	export let set: Set;
 
-	let _created_at = new Date(created_at);
+	let _created_at = new Date(set.created_at);
 
-	$: weightSum = modifiers.reduce((prev, obj) => (Number(obj.variant) || 0) + prev, 0);
+	$: weightSum = set.modifiers.reduce((prev, obj) => ((obj && Number(obj.variant)) || 0) + prev, 0);
 
 	/**
 	 * Toggle whether the editing modal is visible.
@@ -47,10 +45,10 @@
 		<div class="card-header-title">
 			<div class="tags">
 				<span class="tag is-medium is-rounded">
-					{exercise}
+					{set.exercise}
 				</span>
 				<span class="tag is-rounded">
-					{reps} reps
+					{set.reps} reps
 				</span>
 				<span class="tag is-rounded">
 					{weightSum} lbs
@@ -66,11 +64,11 @@
 			<div class="content">
 				<p class="subtitle">Modifiers</p>
 				<div class="tile is-ancestor">
-					{#each modifiers as modifier}
+					{#each set.modifiers as modifier}
 						{#if modifier}
 							<div class="tile is-parent">
 								<div class="tile is-child box">
-									<p class="subtitle">{modifier.name}</p>
+									<p class="subtitle">{modifier.modifier.name}</p>
 									<p class="">{modifier.variant}</p>
 								</div>
 							</div>
@@ -103,28 +101,41 @@
 				<div class="field">
 					<label>
 						Exercise
-						<input class="input" type="text" bind:value={exercise} />
+						<input class="input" type="text" bind:value={set.exercise} />
 					</label>
 				</div>
-				<div class="field">
-					<label>
-						Reps
-						<input class="input" type="number" bind:value={reps} />
-					</label>
+				<div class="field is-grouped is-align-items-end">
+					<div class="control is-expanded">
+						<label>
+							Reps
+							<input class="input" type="number" bind:value={set.reps} />
+						</label>
+					</div>
+					<div class="control">
+						<label>
+							Failed
+							<input type="checkbox" class="checkbox" bind:checked={set.failed} />
+						</label>
+					</div>
 				</div>
-				{#each modifiers as modifier, i}
+				{#each set.modifiers as modifier, i}
 					{#if modifier}
 						<div class="field is-grouped is-align-items-end">
 							<div class="control is-flex-shrink-2">
 								<label>
 									Modifier Name
-									<input class="input" type="text" bind:value={modifier.name} />
+									<input class="input" type="text" bind:value={modifier.modifier.name} />
 								</label>
 							</div>
 							<div class="control is-flex-shrink-2">
+								<!-- svelte-ignore a11y-label-has-associated-control -->
 								<label>
 									Variant
-									<input class="input" type="text" bind:value={modifier.variant} />
+									{#if modifier.modifier.type == 'text'}
+										<input class="input" type="text" bind:value={modifier.variant} />
+									{:else if modifier.modifier.type == 'number'}
+										<input class="input" type="number" bind:value={modifier.variant} />
+									{/if}
 								</label>
 							</div>
 							<div class="control">
@@ -132,7 +143,7 @@
 									type="button"
 									class="button is-danger"
 									on:click={() => {
-										modifiers[i] = undefined;
+										set.modifiers[i] = undefined;
 									}}
 								>
 									<Icon icon="delete" />
@@ -145,7 +156,10 @@
 					type="button"
 					class="button is-primary"
 					on:click|preventDefault={() => {
-						modifiers = [...modifiers, { name: 'null', variant: 'null' }];
+						set.modifiers = [
+							...set.modifiers,
+							{ modifier: { name: '', type: 'text', unit: '' }, variant: '' }
+						];
 					}}>Add Modifier</button
 				>
 			</form>

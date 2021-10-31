@@ -12,6 +12,7 @@ export type Set = {
 	exercise: string;
 	reps: number;
 	modifiers: SetModifier[];
+	failed: boolean;
 
 	// Whether this set has been removed from the workout.
 	removed: boolean;
@@ -32,6 +33,7 @@ export function createSet(
 		exercise: exercise,
 		reps: reps,
 		modifiers: modifiers,
+		failed: false,
 		removed: false,
 		created_at: new Date()
 	};

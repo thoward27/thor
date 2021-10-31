@@ -48,12 +48,7 @@
 		{#if !set.removed}
 			<div class="columns is-vcentered">
 				<div class="column is-four-fifths">
-					<SetComponent
-						bind:exercise={set.exercise}
-						bind:reps={set.reps}
-						bind:modifiers={set.modifiers}
-						created_at={set.created_at}
-					/>
+					<SetComponent bind:set />
 				</div>
 				<div class="column">
 					<p class="buttons">
@@ -69,22 +64,18 @@
 		{/if}
 	{/each}
 	<div class="block mt-6">
-	<button class="button is-success" on:click={addSet}>
-		<Icon icon="add" />
-		<span> Add Set </span>
-	</button>
-	<button class="button is-danger" on:click={reset}>
-		<Icon icon="delete" />
-		<span>
-			Reset
-		</span>
-	</button>
-	<button class="button is-success" on:click={finish}>
-		<Icon icon="check_circle_outline" />
-		<span>
-			Finish
-		</span>
-	</button>
+		<button class="button is-success" on:click={addSet}>
+			<Icon icon="add" />
+			<span> Add Set </span>
+		</button>
+		<button class="button is-danger" on:click={reset}>
+			<Icon icon="delete" />
+			<span> Reset </span>
+		</button>
+		<button class="button is-success" on:click={finish}>
+			<Icon icon="check_circle_outline" />
+			<span> Finish </span>
+		</button>
 	</div>
 {:else}
 	<button class="button is-success" on:click={addSet}>Start Workout</button>
