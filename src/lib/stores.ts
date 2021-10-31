@@ -43,7 +43,7 @@ if (browser) {
 function read<Type>(key: string, fallback: Type, transform: (value: string) => Type): Type {
 	if (browser) {
 		try {
-			return transform(localStorage.getItem(key));
+			return transform(localStorage.getItem(key)) || fallback;
 		} catch (SyntaxError) {
 			return fallback;
 		}
