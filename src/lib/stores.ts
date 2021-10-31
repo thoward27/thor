@@ -24,10 +24,14 @@ modifiers.subscribe((value) => write('modifiers', JSON.stringify(value)));
 
 if (browser) {
 	modifiers.update((modifiers) => {
-		const combined = [...modifiers, ...default_modifiers].filter(
-			(value, index, array) => array.findIndex((entry) => value.name == entry.name) == index
-		);
-		return combined;
+		try {
+			return [...modifiers, ...default_modifiers].filter(
+				(value, index, array) => array.findIndex((entry) => value.name == entry.name) == index
+			);
+		} catch (TypeError) {
+			// If modifiers is null, this gets thrown.
+			return default_modifiers;
+		}
 	});
 }
 
