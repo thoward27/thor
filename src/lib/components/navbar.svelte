@@ -50,6 +50,13 @@
 			<a href="/" class="navbar-item" class:is-active={$page.path.startsWith('/workout')}>
 				Workout
 			</a>
+			<a
+				href="/modifiers"
+				class="navbar-item"
+				class:is-active={$page.path.startsWith('/modifiers')}
+			>
+				Modifiers
+			</a>
 
 			<!-- TODO: <a href="/history" class="navbar-item" class:is-active={$page.path.startsWith('/history')}>
 				History

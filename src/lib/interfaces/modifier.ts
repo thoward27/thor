@@ -15,3 +15,9 @@ export type Modifier = {
 	type: 'text' | 'number' | 'checkbox';
 	unit: string;
 };
+
+export const modifiers: Modifier[] = [
+	{ name: 'band', type: 'text', unit: 'color' },
+	{ name: 'pins', type: 'number', unit: 'hole' },
+	{ name: 'bar', type: 'text', unit: 'style' }
+];
