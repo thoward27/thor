@@ -1,6 +1,26 @@
 <script>
 	import '../app.scss';
 	import { Navbar } from '$lib/components';
+	import { onMount } from 'svelte';
+
+	import * as Sentry from '@sentry/browser';
+	import { Integrations } from '@sentry/tracing';
+
+	Sentry.init({
+		dsn: 'https://6eb88841586a4a2b93ed4c92e3dbfdab@o1059727.ingest.sentry.io/6048571',
+		integrations: [new Integrations.BrowserTracing()],
+
+		// Set tracesSampleRate to 1.0 to capture 100%
+		// of transactions for performance monitoring.
+		// We recommend adjusting this value in production
+		tracesSampleRate: 1.0
+	});
+
+	onMount(() => {
+		window.onerror = (e) => {
+			console.log('Failed to load data.');
+		};
+	});
 </script>
 
 <Navbar />
