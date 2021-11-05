@@ -38,7 +38,6 @@
 					error = err;
 				} else {
 					login();
-					goto('/');
 				}
 			});
 		} else {
