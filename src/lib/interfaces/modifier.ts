@@ -19,5 +19,7 @@ export type Modifier = {
 export const modifiers: Modifier[] = [
 	{ name: 'band', type: 'text', unit: 'color' },
 	{ name: 'pins', type: 'number', unit: 'hole' },
-	{ name: 'bar', type: 'text', unit: 'style' }
+	{ name: 'bar', type: 'text', unit: 'style' },
+	// TODO: Best way to support KG/LBS? Perhaps autocomplete on name + unit combo?
+	{ name: 'weight', type: 'number', unit: 'lbs'}
 ];

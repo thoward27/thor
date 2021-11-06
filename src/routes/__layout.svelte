@@ -1,7 +1,6 @@
 <script>
 	import '../app.scss';
 	import { Navbar } from '$lib/components';
-	import { onMount } from 'svelte';
 
 	import * as Sentry from '@sentry/browser';
 	import { Integrations } from '@sentry/tracing';
@@ -14,12 +13,6 @@
 		// of transactions for performance monitoring.
 		// We recommend adjusting this value in production
 		tracesSampleRate: 1.0
-	});
-
-	onMount(() => {
-		window.onerror = (e) => {
-			console.log('Failed to load data.');
-		};
 	});
 </script>
 

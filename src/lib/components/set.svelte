@@ -1,6 +1,6 @@
 <!-- Component to render a single set in a workout. -->
 <script lang="ts">
-	import { Icon, Modal } from '$lib/components';
+	import { Icon, Modal, SetModifierField } from '$lib/components';
 	import { slide } from 'svelte/transition';
 	import type { Set } from '$lib/interfaces';
 
@@ -9,7 +9,11 @@
 	let _created_at = new Date(set.created_at);
 
 	// Computed weight of all modifiers.
-	$: weightSum = set.modifiers.reduce((prev, obj) => ((obj && Number(obj.variant)) || 0) + prev, 0);
+	$: lbs = set.modifiers.reduce(
+		// Object cannot be null,
+		(prev, obj) => ((obj && obj.modifier.unit == 'lbs' && Number(obj.variant)) || 0) + prev,
+		0
+	);
 
 	// Whether set details are shown.
 	let details = false;
@@ -27,9 +31,11 @@
 				<span class="tag is-rounded">
 					{set.reps} reps
 				</span>
-				<span class="tag is-rounded">
-					{weightSum} lbs
-				</span>
+				{#if lbs > 0}
+					<span class="tag is-rounded">
+						{lbs} lbs
+					</span>
+				{/if}
 			</div>
 		</div>
 		<button class="card-header-icon" on:click|stopPropagation={() => (modal = true)}>
@@ -90,23 +96,7 @@
 		{#each set.modifiers as modifier, i}
 			{#if modifier}
 				<div class="field is-grouped is-align-items-end">
-					<div class="control is-flex-shrink-2">
-						<label>
-							Modifier Name
-							<input class="input" type="text" bind:value={modifier.modifier.name} />
-						</label>
-					</div>
-					<div class="control is-flex-shrink-2">
-						<!-- svelte-ignore a11y-label-has-associated-control -->
-						<label>
-							Variant
-							{#if modifier.modifier.type == 'text'}
-								<input class="input" type="text" bind:value={modifier.variant} />
-							{:else if modifier.modifier.type == 'number'}
-								<input class="input" type="number" bind:value={modifier.variant} />
-							{/if}
-						</label>
-					</div>
+					<SetModifierField bind:modifier />
 					<div class="control">
 						<button
 							type="button"
