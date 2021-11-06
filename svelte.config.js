@@ -40,6 +40,9 @@ const config = {
 					'gun/lib/store',
 					'gun/lib/rindexed'
 				]
+			},
+			define: {
+				'__VERSION__': JSON.stringify(process.env.npm_package_version),
 			}
 		}
 	}
