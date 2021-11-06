@@ -5,8 +5,6 @@
 	import { workout as newWorkout, createSet, duplicateSet } from '$lib/interfaces';
 	import clone from 'just-clone';
 
-	$: sets = $workout.sets;
-
 	/**
 	 * Add a set to the end of the workout.
 	 */
@@ -52,7 +50,7 @@
 		<Title title="Workout" />
 	</div>
 	<div class="column is-narrow">
-		{#if sets.length > 0}
+		{#if $workout.sets.length > 0}
 			<button class="button is-success" on:click={addSet}>
 				<Icon icon="add" />
 				<span> Add Set </span>
@@ -71,7 +69,7 @@
 	</div>
 </div>
 
-{#each sets as set, i}
+{#each $workout.sets as set, i}
 	{#if !set.removed}
 		<div class="columns is-vcentered">
 			<div class="column is-four-fifths">
