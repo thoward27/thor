@@ -83,7 +83,7 @@
 			<div class="control is-expanded">
 				<label>
 					Reps
-					<input class="input" type="number" bind:value={set.reps} />
+					<input class="input" type="number" min="0" max="1000" bind:value={set.reps} />
 				</label>
 			</div>
 			<div class="control">
