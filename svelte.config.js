@@ -42,7 +42,7 @@ const config = {
 				]
 			},
 			define: {
-				'__VERSION__': JSON.stringify(process.env.npm_package_version),
+				__VERSION__: JSON.stringify(process.env.npm_package_version)
 			}
 		}
 	}

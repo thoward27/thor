@@ -2,40 +2,12 @@
 	import { Title, Icon } from '$lib/components';
 	import { Set as SetComponent } from '$lib/components';
 	import { workout, workouts } from '$lib/stores';
-	import { workout as newWorkout, createSet, duplicateSet } from '$lib/interfaces';
+	import { workout_utils } from '$lib/utils';
 	import clone from 'just-clone';
 
-	/**
-	 * Add a set to the end of the workout.
-	 */
-	function addSet() {
-		// Simply adds a set to the end of the workout.
-		$workout.sets = [...$workout.sets, createSet($workout.sets.length, 'null')];
-		console.log(`added set ${workout}`);
-	}
-
-	function reset() {
-		// Resets the workout by clearing it.
-		$workout = newWorkout();
-		console.log(`reset workout to ${workout}`);
-	}
-	function duplicate(index: number) {
-		// Duplicate a set.
-		return () => {
-			$workout.sets = [...$workout.sets, duplicateSet($workout.sets.length, $workout.sets[index])];
-			console.log($workout);
-		};
-	}
-	function remove(index: number) {
-		// Mark a set as removed.
-		return () => {
-			$workout.sets[index].removed = true;
-			console.log($workout);
-		};
-	}
 	function finish() {
 		$workouts = [...$workouts, clone($workout)];
-		reset();
+		$workout = workout_utils.create();
 	}
 </script>
 
@@ -51,11 +23,14 @@
 	</div>
 	<div class="column is-narrow">
 		{#if $workout.sets.length > 0}
-			<button class="button is-success" on:click={addSet}>
+			<button
+				class="button is-success"
+				on:click={() => ($workout = workout_utils.addSet($workout))}
+			>
 				<Icon icon="add" />
 				<span> Add Set </span>
 			</button>
-			<button class="button is-danger" on:click={reset}>
+			<button class="button is-danger" on:click={() => ($workout = workout_utils.create())}>
 				<Icon icon="delete" />
 				<span> Reset </span>
 			</button>
@@ -64,7 +39,12 @@
 				<span> Finish </span>
 			</button>
 		{:else}
-			<button class="button is-success" on:click={addSet}>Start Workout</button>
+			<button
+				class="button is-success"
+				on:click={() => ($workout = workout_utils.addSet($workout))}
+			>
+				Start Workout
+			</button>
 		{/if}
 	</div>
 </div>
@@ -77,10 +57,13 @@
 			</div>
 			<div class="column">
 				<p class="buttons">
-					<button class="button" on:click={duplicate(i)}>
+					<button
+						class="button"
+						on:click={() => ($workout = workout_utils.duplicateSet($workout, i))}
+					>
 						<Icon icon="content_copy" />
 					</button>
-					<button class="button" on:click={remove(i)}>
+					<button class="button" on:click={() => ($workout = workout_utils.removeSet($workout, i))}>
 						<Icon icon="delete" />
 					</button>
 				</p>

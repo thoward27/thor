@@ -2,7 +2,7 @@
 <script lang="ts">
 	import { Icon, Modal, SetModifierField } from '$lib/components';
 	import { slide } from 'svelte/transition';
-	import type { Set } from '$lib/interfaces';
+	import type { Set } from '$lib/utils';
 
 	/// The Set object to render.
 	export let set: Set;

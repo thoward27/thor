@@ -33,6 +33,7 @@
 		"@sentry/browser": "^6.14.0",
 		"@sentry/tracing": "^6.14.0",
 		"@tarekraafat/autocomplete.js": "^10.2.6",
+		"ajv": "^8.6.3",
 		"gun": "^0.2020.1235",
 		"just-clone": "^4.0.0"
 	}
