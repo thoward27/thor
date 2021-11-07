@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Title, Icon } from '$lib/components';
 	import { workouts } from '$lib/stores';
-	import type { Set } from '$lib/interfaces';
+	import type { Set } from '$lib/utils';
 
 	// Filter out the stuff we don't need to save.
 	$: output = JSON.stringify(

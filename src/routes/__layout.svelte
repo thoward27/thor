@@ -1,6 +1,6 @@
 <script>
 	import '../app.scss';
-	import {mode} from '$app/env';
+	import { mode } from '$app/env';
 	import { Navbar } from '$lib/components';
 
 	import * as Sentry from '@sentry/browser';
@@ -9,7 +9,7 @@
 	Sentry.init({
 		dsn: 'https://6eb88841586a4a2b93ed4c92e3dbfdab@o1059727.ingest.sentry.io/6048571',
 		// @ts-ignore: This gets defined in `svelte.config.js`.
-		release: `thor-fitness@${__VERSION__}`,
+		release: `thor-fitness@${__VERSION__}`, // eslint-disable-line no-undef
 		integrations: [new Integrations.BrowserTracing()],
 		environment: mode,
 		tracesSampleRate: 0.9

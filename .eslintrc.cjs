@@ -18,6 +18,8 @@ module.exports = {
 		node: true
 	},
 	rules: {
-		'@typescript-eslint/ban-ts-comment': 'off'
+		'@typescript-eslint/ban-ts-comment': 'off',
+		'@typescript-eslint/no-namespace': 'off',
+		'@typescript-eslint/no-non-null-assertion': 'off'
 	}
 };

@@ -4,20 +4,22 @@
 </script>
 
 <script lang="ts">
-	import type { SetModifier } from '$lib/interfaces';
+	import type { SetModifierType } from '$lib/schemas';
 	import autoComplete from '@tarekraafat/autocomplete.js';
 	import { onMount } from 'svelte';
 	import { modifiers } from '$lib/stores';
 	import clone from 'just-clone';
 
-	export let modifier: SetModifier;
+	export let modifier: SetModifierType;
 
 	// TODO: Can we compress this to one lookup?
 	$: modifier.modifier.unit = (
-		$modifiers.find((value) => value.name == modifier.modifier.name) || { unit: '' }
+		$modifiers.find((value) => value.name == modifier.modifier.name.toLowerCase()) || { unit: '' }
 	).unit;
 	$: modifier.modifier.type = (
-		$modifiers.find((value) => value.name == modifier.modifier.name) || { type: 'text' }
+		$modifiers.find((value) => value.name == modifier.modifier.name.toLowerCase()) || {
+			type: 'text'
+		}
 	).type;
 
 	let id = `autocomplete${counter++}`;
