@@ -1,5 +1,7 @@
 # Thor Fitness
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e15a3907-6168-40e0-a7a8-fe76f35a1030/deploy-status)](https://app.netlify.com/sites/thor-fitness/deploys)
+
 ## Developing
 
 ```
