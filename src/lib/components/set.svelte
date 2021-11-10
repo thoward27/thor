@@ -2,10 +2,11 @@
 <script lang="ts">
 	import { Icon, Modal, SetModifierField } from '$lib/components';
 	import { slide } from 'svelte/transition';
-	import type { Set } from '$lib/utils';
+	import type { SetType } from '$lib/schemas';
+	import { press } from '$lib/gestures';
 
 	/// The Set object to render.
-	export let set: Set;
+	export let set: SetType;
 	let _created_at = new Date(set.created_at);
 
 	// Computed weight of all modifiers.
@@ -22,7 +23,7 @@
 </script>
 
 <div class="card">
-	<header class="card-header" on:click|stopPropagation={() => (details = !details)}>
+	<header class="card-header" use:press on:press|preventDefault={() => (details = !details)}>
 		<div class="card-header-title">
 			<div class="tags">
 				<span class="tag is-medium is-rounded">
@@ -40,6 +41,9 @@
 		</div>
 		<button class="card-header-icon" on:click|stopPropagation={() => (modal = true)}>
 			<Icon icon="edit" />
+		</button>
+		<button class="card-header-icon" on:click|stopPropagation={() => (details = !details)}>
+			<Icon icon="expand_more" />
 		</button>
 	</header>
 	{#if details}
