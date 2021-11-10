@@ -7,7 +7,7 @@
 export { press, tap, swipe } from 'svelte-gestures';
 
 // Imports here are for our custom events.
-import { setPointerControls, DEFAULT_DELAY, press } from 'svelte-gestures';
+import { setPointerControls, DEFAULT_DELAY } from 'svelte-gestures';
 
 // Any custom handlers go here.
 

@@ -14,13 +14,16 @@ export function addSet(workout: WorkoutType): WorkoutType {
 }
 
 /** Duplicate the set at the given index. */
-export function duplicateSet(workout: WorkoutType, index: number): WorkoutType {
-	workout.sets = [set_utils.duplicate(workout.sets.length, workout.sets[index]), ...workout.sets];
+export function duplicateSet(workout: WorkoutType, id: number): WorkoutType {
+	workout.sets = [
+		set_utils.duplicate(workout.sets.length, workout.sets.find((value) => value.id == id)!),
+		...workout.sets
+	];
 	return workout;
 }
 
 /** Remove the set from the workout. */
-export function removeSet(workout: WorkoutType, index: number): WorkoutType {
-	workout.sets[index].removed = true;
+export function removeSet(workout: WorkoutType, id: number): WorkoutType {
+	workout.sets.find((value) => value.id == id)!.removed = true;
 	return workout;
 }
