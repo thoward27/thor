@@ -5,4 +5,5 @@ export { default as Set } from './set.svelte';
 export { default as Subtitle } from './subtitle.svelte';
 export { default as Icon } from './icon.svelte';
 export { default as Modal } from './modal.svelte';
+export { default as Header } from './header.svelte';
 export * from './form';

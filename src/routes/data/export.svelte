@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Title, Icon } from '$lib/components';
+	import { Icon, Header } from '$lib/components';
 	import { workouts } from '$lib/stores';
-	import type { Set } from '$lib/utils';
+	import type { SetType } from '$lib/schemas';
 
 	// Filter out the stuff we don't need to save.
 	$: output = JSON.stringify(
@@ -10,23 +10,24 @@
 		2
 	);
 
-	function cleanSets(sets: Set[]): Set[] {
+	function cleanSets(sets: SetType[]): SetType[] {
 		return sets.filter((set) => !set.removed).map((set, index) => ({ ...set, id: index }));
 	}
 </script>
 
-<Title title="Export Data" />
+<Header title="Export Data">
+	<span slot="controls">
+		<a
+			href="data:text/json;charset=utf-8,{encodeURIComponent(output)}"
+			download="workout.json"
+			class="button is-primary"
+		>
+			<Icon icon="save" />
+			<span> Download </span>
+		</a>
+	</span>
+</Header>
 
 <div class="block">
-	<pre>
-    {output}
-</pre>
+	<pre>{output}</pre>
 </div>
-<a
-	href="data:text/json;charset=utf-8,{encodeURIComponent(output)}"
-	download="workout.json"
-	class="button is-primary"
->
-	<Icon icon="save" />
-	<span> Download </span>
-</a>

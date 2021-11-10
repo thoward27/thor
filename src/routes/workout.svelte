@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Title, Icon } from '$lib/components';
+	import { Icon, Header } from '$lib/components';
 	import { Set as SetComponent } from '$lib/components';
 	import { workout, workouts } from '$lib/stores';
 	import { workout_utils } from '$lib/utils';
@@ -15,13 +15,8 @@
 	<title>Thor Fitness</title>
 </svelte:head>
 
-<div
-	class="columns mb-4 is-mobile is-multiline is-align-items-end is-justify-content-space-between"
->
-	<div class="column is-narrow">
-		<Title title="Workout" />
-	</div>
-	<div class="column is-narrow">
+<Header title="Workout">
+	<span slot="controls">
 		{#if $workout.sets.length > 0}
 			<button
 				class="button is-success"
@@ -46,8 +41,8 @@
 				Start Workout
 			</button>
 		{/if}
-	</div>
-</div>
+	</span>
+</Header>
 
 {#each $workout.sets as set, i}
 	{#if !set.removed}

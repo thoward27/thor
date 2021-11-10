@@ -1,5 +1,5 @@
 <script>
-	import { Icon, Title } from '$lib/components';
+	import { Icon, Header } from '$lib/components';
 	import { workouts } from '$lib/stores';
 
 	let files;
@@ -21,7 +21,13 @@
 	}
 </script>
 
-<Title title="Import Data" />
+<Header title="Import Data">
+	<span slot="controls">
+		<button class="button is-success" disabled={!file} on:click={set} on:change={load}>
+			Import
+		</button>
+	</span>
+</Header>
 
 <div class="block">
 	<div class="file">
@@ -41,4 +47,3 @@
 		</label>
 	</div>
 </div>
-<button class="button is-success" disabled={!file} on:click={set} on:change={load}>Import</button>

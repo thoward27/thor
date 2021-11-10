@@ -1,19 +1,22 @@
 <script>
-	import { Title, Modal } from '$lib/components';
+	import { Modal, Header } from '$lib/components';
 	import { modifiers } from '$lib/stores';
 
 	// Whether the Add Modifier modal is shown.
 	let addForm = false;
 </script>
 
-<div class="columns is-mobile is-align-items-end is-justify-content-space-between">
-	<div class="column is-narrow">
-		<Title title="Modifiers" />
-	</div>
-	<div class="column is-narrow">
-		<button on:click={() => (addForm = !addForm)} class="button is-primary">New</button>
-	</div>
-</div>
+<Header title="Modifiers">
+	<span slot="controls">
+		<div class="column is-narrow">
+			<!-- TODO: Finish the add form for modifiers. -->
+			<button on:click={() => (addForm = !addForm)} class="button is-primary" disabled>
+				New
+			</button>
+		</div>
+	</span>
+</Header>
+
 <div class="tile is-ancestor">
 	{#each $modifiers as modifier, index}
 		<div class="tile is-parent">
