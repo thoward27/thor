@@ -9,13 +9,13 @@ export function create(): WorkoutType {
 
 /** Add a set to a workout. */
 export function addSet(workout: WorkoutType): WorkoutType {
-	workout.sets = [...workout.sets, create_set(workout.sets.length, 'null')];
+	workout.sets = [create_set(workout.sets.length, 'null'), ...workout.sets];
 	return workout;
 }
 
 /** Duplicate the set at the given index. */
 export function duplicateSet(workout: WorkoutType, index: number): WorkoutType {
-	workout.sets = [...workout.sets, set_utils.duplicate(workout.sets.length, workout.sets[index])];
+	workout.sets = [set_utils.duplicate(workout.sets.length, workout.sets[index]), ...workout.sets];
 	return workout;
 }
 
