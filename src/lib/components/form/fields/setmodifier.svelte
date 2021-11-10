@@ -57,6 +57,7 @@
 		href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.6/dist/css/autoComplete.02.min.css"
 	/>
 </svelte:head>
+
 <div class="control is-flex-shrink-2">
 	<label>
 		Modifier Name
@@ -89,6 +90,7 @@
 <style>
 	input {
 		text-transform: capitalize;
+		width: 100% !important;
 	}
 	label {
 		text-transform: capitalize;
