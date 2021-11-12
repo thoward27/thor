@@ -107,8 +107,6 @@
 			class="column"
 			use:doubletap
 			on:doubletap={() => ($workout = workout_utils.duplicateSet($workout, set.id))}
-			use:swipe
-			on:swipe={(event) => swipeHandler(event, set.id)}
 		>
 			<SetComponent bind:set />
 		</div>
