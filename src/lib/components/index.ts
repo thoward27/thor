@@ -6,4 +6,5 @@ export { default as Subtitle } from './subtitle.svelte';
 export { default as Icon } from './icon.svelte';
 export { default as Modal } from './modal.svelte';
 export { default as Header } from './header.svelte';
+export { default as Button } from './button.svelte';
 export * from './form';

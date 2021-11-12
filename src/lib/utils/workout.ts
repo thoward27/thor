@@ -9,7 +9,7 @@ export function create(): WorkoutType {
 
 /** Add a set to a workout. */
 export function addSet(workout: WorkoutType): WorkoutType {
-	workout.sets = [create_set(workout.sets.length, 'null'), ...workout.sets];
+	workout.sets = [create_set(workout.sets.length, ''), ...workout.sets];
 	return workout;
 }
 

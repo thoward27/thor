@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Icon, Header } from '$lib/components';
+	import { Header, Button } from '$lib/components';
 	import { Set as SetComponent } from '$lib/components';
 	import { workout, workouts } from '$lib/stores';
 	import { workout_utils } from '$lib/utils';
@@ -51,28 +51,21 @@
 <Header title="Workout">
 	<span slot="controls">
 		{#if $workout.sets.length > 0}
-			<button
-				class="button is-success"
-				on:click={() => ($workout = workout_utils.addSet($workout))}
-			>
-				<Icon icon="add" />
-				<span> Add Set </span>
-			</button>
-			<button class="button is-danger" on:click={() => ($workout = workout_utils.create())}>
-				<Icon icon="delete" />
-				<span> Reset </span>
-			</button>
-			<button class="button is-success" on:click={finish}>
-				<Icon icon="check_circle_outline" />
-				<span> Finish </span>
-			</button>
+			<Button
+				text="Add Set"
+				icon="add"
+				color="success"
+				onClick={() => ($workout = workout_utils.addSet($workout))}
+			/>
+			<Button
+				text="Reset"
+				icon="delete"
+				color="danger"
+				onClick={() => ($workout = workout_utils.create())}
+			/>
+			<Button text="Finish" icon="check_circle_outline" color="success" onClick={finish} />
 		{:else}
-			<button
-				class="button is-success"
-				on:click={() => ($workout = workout_utils.addSet($workout))}
-			>
-				Start Workout
-			</button>
+			<Button text="Start Workout" onClick={() => ($workout = workout_utils.addSet($workout))} />
 		{/if}
 	</span>
 </Header>
@@ -87,18 +80,16 @@
 		{#if menu_exposed == set.id || true}
 			<div class="column is-narrow">
 				<div class="buttons has-addons">
-					<button
-						class="button"
-						on:click={() => ($workout = workout_utils.duplicateSet($workout, set.id))}
-					>
-						<Icon icon="content_copy" />
-					</button>
-					<button
-						class="button"
-						on:click={() => ($workout = workout_utils.removeSet($workout, set.id))}
-					>
-						<Icon icon="delete" />
-					</button>
+					<Button
+						icon="content_copy"
+						color="success"
+						onClick={() => ($workout = workout_utils.duplicateSet($workout, set.id))}
+					/>
+					<Button
+						icon="delete"
+						color="danger"
+						onClick={() => ($workout = workout_utils.removeSet($workout, set.id))}
+					/>
 				</div>
 			</div>
 		{/if}

@@ -22,7 +22,7 @@
 	let modal = false;
 </script>
 
-<div class="card">
+<div class="card" data-cy="set">
 	<header class="card-header" use:press on:press|preventDefault={() => (details = !details)}>
 		<div class="card-header-title">
 			<div class="tags">
@@ -76,7 +76,7 @@
 </div>
 
 <Modal bind:active={modal} title="Modify Set">
-	<form action="">
+	<form action="" data-cy="edit">
 		<div class="field">
 			<label>
 				Exercise

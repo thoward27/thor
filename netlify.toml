@@ -5,3 +5,12 @@ functions = "functions/"
 
 [functions]
 node_bundler = "esbuild"
+
+[build.environment]
+CYPRESS_CACHE_FOLDER = './node_modules/CypressBinary'
+
+[[plugins]]
+# runs Cypress tests against the deployed URL
+package = "netlify-plugin-cypress"
+  [plugins.inputs]
+  record = true
