@@ -6,14 +6,18 @@
 	import * as Sentry from '@sentry/browser';
 	import { Integrations } from '@sentry/tracing';
 
-	Sentry.init({
-		dsn: 'https://6eb88841586a4a2b93ed4c92e3dbfdab@o1059727.ingest.sentry.io/6048571',
-		// @ts-ignore: This gets defined in `svelte.config.js`.
-		release: `thor-fitness@${__VERSION__}`, // eslint-disable-line no-undef
-		integrations: [new Integrations.BrowserTracing()],
-		environment: mode,
-		tracesSampleRate: 0.9
-	});
+	if (mode == 'development') {
+		console.log('skipping sentry');
+	} else {
+		Sentry.init({
+			dsn: 'https://6eb88841586a4a2b93ed4c92e3dbfdab@o1059727.ingest.sentry.io/6048571',
+			// @ts-ignore: This gets defined in `svelte.config.js`.
+			release: `thor-fitness@${__VERSION__}`, // eslint-disable-line no-undef
+			integrations: [new Integrations.BrowserTracing()],
+			environment: mode,
+			tracesSampleRate: 0.9
+		});
+	}
 </script>
 
 <Navbar />

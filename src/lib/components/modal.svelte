@@ -1,12 +1,16 @@
 <script lang="ts">
+	import Button from './button.svelte';
+
 	/// Whether to display the modal.
 	export let active = false;
 
 	/// Modal title
 	export let title: string;
 
-	export let onSave: () => void | null = null;
+	/// Void callback for save events, button only rendered if provided.
+	export let onSave: null | (() => void) = null;
 
+	// We use this to allow 'escape' to close the modal.
 	function keyup(e: KeyboardEvent) {
 		if (e.key == 'Escape' && active) {
 			active = false;
@@ -28,9 +32,9 @@
 		</section>
 		<footer class="modal-card-foot">
 			{#if onSave}
-				<button class="button is-primary" on:click={onSave}>Save</button>
+				<Button text="Save" color="primary" onClick={onSave}/>
 			{/if}
-			<button class="button" on:click={() => (active = false)}>Close</button>
+			<Button text="Close" color="info" onClick={() => (active = false)} />
 		</footer>
 	</div>
 </div>
