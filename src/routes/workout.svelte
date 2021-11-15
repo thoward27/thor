@@ -4,7 +4,7 @@
 	import { workout, workouts } from '$lib/stores';
 	import { workout_utils } from '$lib/utils';
 	import clone from 'just-clone';
-	import { doubletap, swipe } from '$lib/gestures';
+	import { doubletap } from '$lib/gestures';
 	import { flip } from 'svelte/animate';
 	import { quintOut } from 'svelte/easing';
 	import { crossfade } from 'svelte/transition';
@@ -34,14 +34,6 @@
 
 	// Expose a menu per-set when a set is swiped.
 	let menu_exposed: number | null = null;
-	function swipeHandler(event: CustomEvent, index: number) {
-		console.log(event);
-		if (event.detail.direction == 'right') {
-			menu_exposed = index;
-		} else {
-			menu_exposed = null;
-		}
-	}
 </script>
 
 <svelte:head>
@@ -70,7 +62,7 @@
 	</span>
 </Header>
 
-{#each $workout.sets.filter((s) => !s.removed) as set (set.id)}
+{#each $workout.sets.filter((s) => !s.removed) as set, i (set.id)}
 	<div
 		class="columns is-vcentered is-mobile"
 		in:receive={{ key: set.id }}

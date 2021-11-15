@@ -32,7 +32,7 @@
 		</section>
 		<footer class="modal-card-foot">
 			{#if onSave}
-				<Button text="Save" color="primary" onClick={onSave}/>
+				<Button text="Save" color="primary" onClick={onSave} />
 			{/if}
 			<Button text="Close" color="info" onClick={() => (active = false)} />
 		</footer>

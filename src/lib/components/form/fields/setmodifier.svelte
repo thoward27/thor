@@ -72,6 +72,7 @@
 			maxlength="2048"
 			class="input"
 			bind:value={modifier.modifier.name}
+			data-cy="setmodifier-name-input"
 		/>
 	</label>
 </div>
