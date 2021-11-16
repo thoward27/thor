@@ -1,12 +1,14 @@
 <!-- Component to render a single set in a workout. -->
 <script lang="ts">
-	import { Icon, Modal, SetModifierField } from '$lib/components';
+	import { Icon, Tag, Modal, SetModifierField } from '$lib/components';
 	import type { SetType } from '$lib/schemas';
 	import Button from './button.svelte';
 	import clone from 'just-clone';
+	import { slide } from 'svelte/transition';
 
 	/// The Set object to render.
 	export let set: SetType;
+	export let expanded = false;
 
 	// Computed weight of all modifiers.
 	// $: lbs = set.modifiers.reduce(
@@ -24,45 +26,26 @@
 	}
 </script>
 
-<div class="box mb-0" data-cy="set">
+<div class="box mb-0" data-cy="set" on:click={() => (expanded = !expanded)}>
 	<div class="columns is-mobile">
 		<div class="column">
 			<div class="field is-grouped is-grouped-multiline">
-				<div class="control">
-					<div class="tags are-medium">
-						<span class="tag is-rounded is-info">
-							{set.exercise}
-						</span>
-					</div>
-				</div>
-				<div class="control">
-					<div class="tags are-medium has-addons">
-						<span class="tag is-rounded is-info"> reps </span>
-						<span class="tag is-rounded is-light">
-							{set.reps}
-						</span>
-					</div>
-				</div>
+				<Tag name={set.exercise} bind:expanded />
+				<Tag name="reps" variant={set.reps} bind:expanded />
 				{#each set.modifiers.filter((set) => !set.removed) as modifier, i}
-					<div class="control">
-						<div class="tags are-medium has-addons">
-							<span class="tag is-rounded is-dark">
-								{modifier.modifier.name}
-							</span>
-							<span class="tag is-rounded is-light">
-								{modifier.variant}
-								<!-- TODO: Feature flag around the delete button. -->
-								<!-- <button class="delete is-small" on:click={() => removeModifier(i)}/> -->
-							</span>
-						</div>
-					</div>
+					<Tag name={modifier.modifier.name} variant={modifier.variant} bind:expanded />
 				{/each}
 			</div>
 		</div>
-		<div class="column is-narrow">
-			<Button icon="edit" color="info" onClick={() => (modal = true)} />
-		</div>
 	</div>
+	{#if expanded}
+		<div transition:slide class="block">
+			<div class="buttons">
+				<Button icon="edit" text="Edit" color="info" onClick={() => (modal = true)} />
+				<slot name="actions" />
+			</div>
+		</div>
+	{/if}
 </div>
 
 <Modal bind:active={modal} title="Modify Set">

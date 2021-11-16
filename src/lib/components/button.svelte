@@ -13,7 +13,7 @@
 	});
 </script>
 
-<button class="button is-{color}" on:click={onClick} {disabled}>
+<button class="button is-{color}" on:click|stopPropagation={onClick} {disabled}>
 	{#if icon}
 		<Icon {icon} />
 	{/if}

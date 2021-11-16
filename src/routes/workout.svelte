@@ -27,13 +27,22 @@
 		}
 	});
 
+	function start() {
+		$workout = workout_utils.create();
+	}
 	function finish() {
 		$workouts = [...$workouts, clone($workout)];
 		$workout = workout_utils.create();
 	}
-
-	// Expose a menu per-set when a set is swiped.
-	let menu_exposed: number | null = null;
+	function addSet() {
+		$workout = workout_utils.addSet($workout);
+	}
+	function removeSet(id: number) {
+		$workout = workout_utils.removeSet($workout, id);
+	}
+	function cloneSet(id: number) {
+		$workout = workout_utils.duplicateSet($workout, id);
+	}
 </script>
 
 <svelte:head>
@@ -43,21 +52,11 @@
 <Header title="Workout">
 	<span slot="controls">
 		{#if $workout.sets.length > 0}
-			<Button
-				text="Add Set"
-				icon="add"
-				color="success"
-				onClick={() => ($workout = workout_utils.addSet($workout))}
-			/>
-			<Button
-				text="Reset"
-				icon="delete"
-				color="danger"
-				onClick={() => ($workout = workout_utils.create())}
-			/>
+			<Button text="Add Set" icon="add" color="success" onClick={addSet} />
+			<Button text="Reset" icon="delete" color="danger" onClick={start} />
 			<Button text="Finish" icon="check_circle_outline" color="success" onClick={finish} />
 		{:else}
-			<Button text="Start Workout" onClick={() => ($workout = workout_utils.addSet($workout))} />
+			<Button text="Start Workout" onClick={addSet} />
 		{/if}
 	</span>
 </Header>
@@ -69,29 +68,18 @@
 		out:send={{ key: set.id }}
 		animate:flip
 	>
-		{#if menu_exposed == set.id || true}
-			<div class="column is-narrow">
-				<div class="buttons has-addons">
+		<div class="column" use:doubletap on:doubletap={() => cloneSet(set.id)}>
+			<SetComponent bind:set>
+				<div slot="actions">
 					<Button
+						text="Duplicate"
 						icon="content_copy"
 						color="success"
-						onClick={() => ($workout = workout_utils.duplicateSet($workout, set.id))}
+						onClick={() => cloneSet(set.id)}
 					/>
-					<Button
-						icon="delete"
-						color="danger"
-						onClick={() => ($workout = workout_utils.removeSet($workout, set.id))}
-					/>
+					<Button text="Delete" icon="delete" color="danger" onClick={() => removeSet(set.id)} />
 				</div>
-			</div>
-		{/if}
-
-		<div
-			class="column"
-			use:doubletap
-			on:doubletap={() => ($workout = workout_utils.duplicateSet($workout, set.id))}
-		>
-			<SetComponent bind:set />
+			</SetComponent>
 		</div>
 	</div>
 {/each}
