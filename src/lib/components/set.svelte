@@ -5,10 +5,11 @@
 	import Button from './button.svelte';
 	import clone from 'just-clone';
 	import { slide } from 'svelte/transition';
+	import { modifiers } from '$lib/stores';
 
 	/// The Set object to render.
 	export let set: SetType;
-	export let expanded = false;
+	export let expanded = true;
 
 	// Computed weight of all modifiers.
 	// $: lbs = set.modifiers.reduce(
@@ -23,6 +24,43 @@
 	function removeModifier(index: number): void {
 		set.modifiers.splice(index, 1);
 		set.modifiers = clone(set.modifiers);
+	}
+
+	/**Add a proposed modifier to the modifiers list.*/
+	function addModifier(name: string, variant: string | number | null) {
+		const lowerName = name.toLowerCase();
+		console.log(lowerName);
+
+		// Proposed Modifier to add.
+		const cannonical = $modifiers.find((modifier) => modifier.name.toLowerCase() == lowerName);
+		console.log(cannonical);
+
+		const existing = set.modifiers.findIndex(
+			(modifier) => modifier.modifier.name.toLowerCase() == lowerName
+		);
+		console.log(existing);
+
+		if (cannonical && existing > -1 && cannonical.type == 'number') {
+			// Update existing modifier, instead of creating a new one.
+			let update = set.modifiers.splice(existing, 1)[0];
+			console.log(set.modifiers);
+			console.log(update);
+			update.variant += variant;
+			console.log(update);
+			set.modifiers = [...set.modifiers, update];
+			console.log(set.modifiers);
+		} else if (cannonical) {
+			// Create a new one, since we have the modifier.
+			console.log(set.modifiers);
+			set.modifiers = [
+				...set.modifiers,
+				{ modifier: clone(cannonical), removed: false, variant: variant }
+			];
+			console.log(set.modifiers);
+		} else {
+			// Nothing to do here.
+			throw Error('Tried to add a SetModifier without a Modifier');
+		}
 	}
 </script>
 
@@ -39,7 +77,30 @@
 		</div>
 	</div>
 	{#if expanded}
-		<div transition:slide class="block">
+		<div transition:slide class="container">
+			<div class="divider">Quick Add</div>
+			<div class="block">
+				<div class="block">
+					<Tag
+						name="weight"
+						nameColor="success"
+						variant="+50"
+						onTap={() => addModifier('weight', 50)}
+					/>
+				</div>
+			</div>
+			<div class="divider">Quick Remove</div>
+			<div class="block">
+				<div class="block">
+					<Tag
+						name="weight"
+						nameColor="danger"
+						variant="-50"
+						onTap={() => addModifier('weight', -50)}
+					/>
+				</div>
+			</div>
+			<div class="divider">Quick Actions</div>
 			<div class="buttons">
 				<Button icon="edit" text="Edit" color="info" onClick={() => (modal = true)} />
 				<slot name="actions" />

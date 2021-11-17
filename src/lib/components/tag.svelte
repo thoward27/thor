@@ -20,13 +20,17 @@
 	export let onTap: () => void = () => null;
 </script>
 
-<div class="control" on:click={onTap} transition:scale>
+<div class="control" transition:scale>
 	<div class="tags has-addons are-{size}">
-		<span class="tag is-rounded is-{nameColor}">
+		<span class="tag is-rounded is-{nameColor}" on:click|stopPropagation|preventDefault={onTap}>
 			{name}
 		</span>
 		{#if variant}
-			<span transition:scale class="tag is-rounded is-{variantColor}">
+			<span
+				transition:scale
+				class="tag is-rounded is-{variantColor}"
+				on:click|stopPropagation={onTap}
+			>
 				{variant}
 				{#if expanded && onDelete}
 					<button transition:scale class="delete is-small" on:click|stopPropagation={onDelete} />
