@@ -6,3 +6,5 @@ node_modules
 .vscode/
 .netlify
 cypress/screenshots
+cypress/videos
+radata
