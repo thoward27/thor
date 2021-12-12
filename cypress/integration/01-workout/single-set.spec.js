@@ -9,7 +9,7 @@ describe('Create, edit, and discard single set.', () => {
 		// This waits for it to be enabled, then clicks it.
 		cy.contains('Start Workout').click();
 		// Which should create a set and add a workout.
-		cy.get('[data-cy=set]').should('have.length', 1).click();
+		cy.get('[data-cy=set]').should('have.length', 1);
 	});
 	it('can edit the set', () => {
 		cy.contains('edit').click();
