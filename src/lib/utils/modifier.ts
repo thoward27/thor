@@ -1,5 +1,5 @@
-import { validators } from '$lib/schemas';
 import type { ModifierType } from '$lib/schemas';
+import { validators } from '$lib/schemas';
 
 /** Fixture data containing an array of Modifiers. */
 export const fixtures: ModifierType[] = [

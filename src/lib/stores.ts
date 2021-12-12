@@ -1,8 +1,8 @@
-import { writable } from 'svelte/store';
 import { browser } from '$app/env';
-import { modifier_utils, workout_utils } from '$lib/utils';
-import { parsers } from '$lib/schemas';
 import type { ModifierType, WorkoutType } from '$lib/schemas';
+import { parsers } from '$lib/schemas';
+import { modifier_utils, workout_utils } from '$lib/utils';
+import { writable } from 'svelte/store';
 
 /** Theme data store.
  *

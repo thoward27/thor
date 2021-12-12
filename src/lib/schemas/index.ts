@@ -1,14 +1,13 @@
+import { captureMessage } from '@sentry/minimal';
 import Ajv, { JTDDataType, JTDParser } from 'ajv/dist/jtd.js';
+// Import schemas.
+import { schema as schema_modifier } from './modifier';
+import { schema as schema_set } from './set';
+import { schema as schema_setmodifier } from './setmodifier';
+import { schema as schema_workout } from './workout';
 
 // Instantiate AJV Instance.
 export const ajv = new Ajv();
-
-// Import schemas.
-import { schema as schema_modifier } from './modifier';
-import { schema as schema_setmodifier } from './setmodifier';
-import { schema as schema_set } from './set';
-import { schema as schema_workout } from './workout';
-import { captureMessage } from '@sentry/minimal';
 
 // Export Schemas.
 export { schema_modifier, schema_setmodifier, schema_set, schema_workout };
