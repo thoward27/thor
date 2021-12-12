@@ -10,7 +10,7 @@
 
 	let user: IGunChainReference;
 	onMount(async () => {
-		user = (await import('$lib/initGun')).gun.user().recall({sessionStorage: true});
+		user = (await import('$lib/initGun')).gun.user().recall({ sessionStorage: true });
 	});
 
 	function logout() {

@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import type { IGunChainReference } from 'gun/types/chain';
 	import { onMount } from 'svelte';
-	import { username } from '$lib/stores';
 
 	// Whether the user is currently signing up.
 	export let signup = false;

@@ -21,16 +21,16 @@ describe('Create account, sign out, sign back in.', () => {
 		cy.get('#repeat').type(PASSWORD);
 		cy.get('#terms').check();
 		cy.contains('Register').click();
-        cy.contains('Sign in').should('not.exist')
+		cy.contains('Sign in').should('not.exist');
 	});
-    it('can sign out', () => {
-        cy.contains('Sign out').click({force: true})
-    });
-    it('can sign back in', () => {
-        cy.viewport('macbook-11');
-        cy.contains('Sign in').click();
-        cy.get('#alias').type(USERNAME);
-        cy.get('#password').type(PASSWORD);
-        cy.contains('Log in').click();
-    })
+	it('can sign out', () => {
+		cy.contains('Sign out').click({ force: true });
+	});
+	it('can sign back in', () => {
+		cy.viewport('macbook-11');
+		cy.contains('Sign in').click();
+		cy.get('#alias').type(USERNAME);
+		cy.get('#password').type(PASSWORD);
+		cy.contains('Log in').click();
+	});
 });
