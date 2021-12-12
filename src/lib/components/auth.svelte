@@ -2,24 +2,27 @@
 	import { goto } from '$app/navigation';
 	import type { IGunChainReference } from 'gun/types/chain';
 	import { onMount } from 'svelte';
+	import { username } from '$lib/stores';
 
-	let user: IGunChainReference;
-	onMount(async () => {
-		user = (await import('$lib/db')).user;
-	});
-
+	// Whether the user is currently signing up.
 	export let signup = false;
 
-	let username: string;
+	let alias: string;
 	let password: string;
 	let repeat: string;
 	let terms: boolean;
-	let error: string;
+	let error: string | null;
+
+	let user: IGunChainReference;
+	onMount(async () => {
+		let gun = (await import('$lib/initGun')).gun;
+		user = gun.user().recall({ sessionStorage: true });
+	});
 
 	function login() {
 		console.log('Attempting login.');
 		// @ts-ignore
-		user.auth(username, password, ({ err }) => {
+		user.auth(alias, password, ({ err }) => {
 			if (err) {
 				console.log('Login failed.');
 				error = err;
@@ -32,7 +35,7 @@
 		if (password == repeat) {
 			console.log('Registering new account.');
 			// @ts-ignore
-			user.create(username, password, ({ err }) => {
+			user.create(alias, password, ({ err }) => {
 				if (err) {
 					console.log('create account failed');
 					error = err;
@@ -71,13 +74,7 @@
 		<div class="field">
 			<label class="label" for="alias">Alias</label>
 			<div class="control">
-				<input
-					id="alias"
-					class="input"
-					type="text"
-					placeholder="User Alias"
-					bind:value={username}
-				/>
+				<input id="alias" class="input" type="text" placeholder="User Alias" bind:value={alias} />
 			</div>
 		</div>
 
@@ -92,14 +89,14 @@
 			<div class="field">
 				<label class="label" for="repeat">Repeat Password</label>
 				<div class="control">
-					<input id="repeate" class="input" type="password" bind:value={repeat} />
+					<input id="repeat" class="input" type="password" bind:value={repeat} />
 				</div>
 			</div>
 
 			<div class="field">
 				<div class="control">
 					<label class="checkbox">
-						<input type="checkbox" bind:checked={terms} />
+						<input id="terms" type="checkbox" bind:checked={terms} />
 						I agree to the <a href="/terms">terms and conditions</a>
 					</label>
 				</div>
@@ -109,7 +106,7 @@
 		<div class="field is-grouped">
 			{#if signup}
 				<div class="control">
-					<button class="button is-link" on:click={register}>Sign Up</button>
+					<button class="button is-link" on:click={register}>Register</button>
 				</div>
 			{:else}
 				<div class="control">

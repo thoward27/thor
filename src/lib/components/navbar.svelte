@@ -3,13 +3,14 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import type { IGunChainReference } from 'gun/types/chain';
+	import { Anchor } from '$lib/components';
 
 	// Whether the extended menu is shown on mobile.
 	let menu = false;
 
 	let user: IGunChainReference;
 	onMount(async () => {
-		user = (await import('$lib/db')).user;
+		user = (await import('$lib/initGun')).gun.user().recall({sessionStorage: true});
 	});
 
 	function logout() {
@@ -115,10 +116,8 @@
 			{:else}
 				<div class="navbar-item">
 					<div class="buttons">
-						<a href="/auth/signin" class="button is-light"> Sign in </a>
-						<a href="/auth/signup" class="button is-primary">
-							<strong>Sign up</strong>
-						</a>
+						<Anchor href="/auth/signin" text="Sign in" color="primary" />
+						<Anchor href="/auth/signup" text="Sign up" color="info" />
 					</div>
 				</div>
 			{/if}

@@ -5,6 +5,8 @@
 
 	import * as Sentry from '@sentry/browser';
 	import { Integrations } from '@sentry/tracing';
+	import { onMount } from 'svelte';
+	import { username } from '$lib/stores';
 
 	if (mode == 'development') {
 		console.log('skipping sentry');
@@ -18,6 +20,17 @@
 			tracesSampleRate: 0.9
 		});
 	}
+	onMount(async () => {
+		let gun = (await import('$lib/initGun')).gun;
+		let user = gun.user().recall({ sessionStorage: true });
+		user.get('alias').on((value) => username.set(value));
+		// @ts-ignore
+		gun.on('auth', async () => {
+			const alias = user.get('alias');
+			// @ts-ignore
+			username.set(alias);
+		});
+	});
 </script>
 
 <Navbar />
