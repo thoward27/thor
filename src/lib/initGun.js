@@ -1,5 +1,5 @@
 import { mode } from '$app/env';
-import GUN from 'gun';
+import Gun from 'gun/gun';
 import 'gun/sea.js';
 
 let settings = {
@@ -8,7 +8,8 @@ let settings = {
 };
 
 if (mode == 'development') {
+	console.log('Gun running in development mode.');
 	settings = { ...settings, peers: [] };
 }
 
-export const gun = GUN(settings);
+export const gun = Gun(settings);
