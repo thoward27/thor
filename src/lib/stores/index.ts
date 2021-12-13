@@ -85,7 +85,6 @@ function read<Type>(
 /** Write a value to storage. */
 function write(key: string, value: string) {
 	if (browser) {
-		// console.log(`setItem(${key}: ${value})`);
 		localStorage.setItem(key, value);
 	}
 }
