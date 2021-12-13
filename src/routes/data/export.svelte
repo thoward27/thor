@@ -26,7 +26,7 @@
 						.get('sets')
 						.map()
 						.once((data, _) => {
-							delete data['_']
+							delete data['_'];
 							store[key].sets = [...store[key].sets, data];
 						});
 				} else {
@@ -36,7 +36,11 @@
 			});
 	});
 
-	$: output = JSON.stringify(Object.entries(store), undefined, 2);
+	$: output = JSON.stringify(
+		Object.entries(store).map(([_, value]) => ({ ...value, sets: cleanSets(value.sets) })),
+		undefined,
+		2
+	);
 	function cleanSets(sets: SetType[]): SetType[] {
 		return sets.filter((set) => !set.removed).map((set, index) => ({ ...set, id: index }));
 	}

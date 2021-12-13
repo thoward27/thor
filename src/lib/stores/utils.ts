@@ -1,7 +1,7 @@
 import type { IGunChainReference } from 'gun/types/chain';
 
 /// Gun Store (https://svelte.dev/repl/53ecf1dc52c245faba204f3ca94d5cde?version=3.16.5)
-export function gunStore(ref: IGunChainReference, methods = {}) {
+export function gunStore(ref: IGunChainReference, methods = {}): Record<string, CallableFunction> {
 	let store = {};
 	const subscribers = [];
 

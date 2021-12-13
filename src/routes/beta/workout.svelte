@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
-	import { workout, username } from '$lib/stores';
-	import { workout_utils, set_utils } from '$lib/utils';
+	import { workout } from '$lib/stores';
+	import { set_utils } from '$lib/utils';
 	import { Button } from '$lib/components';
 
 	const KEY = 'test-workouts/v1';
@@ -27,7 +27,7 @@
 						.get('sets')
 						.map()
 						.once((data, _) => {
-							delete data['_']
+							delete data['_'];
 							store[key].sets = [...store[key].sets, data];
 						});
 				} else {
