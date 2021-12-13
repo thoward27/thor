@@ -15,7 +15,7 @@ export function create(
 		modifiers: modifiers,
 		failed: false,
 		removed: false,
-		created_at: new Date()
+		created_at: new Date().toJSON()
 	};
 }
 
@@ -25,6 +25,6 @@ export function duplicate(id: number, target: SetType): SetType {
 		...clone(target),
 		// New set should get a new ID and created_at date.
 		id: id,
-		created_at: new Date()
+		created_at: new Date().toJSON()
 	};
 }

@@ -4,7 +4,7 @@ import { create as create_set } from './set';
 
 /** Create a new workout. */
 export function create(): WorkoutType {
-	return { sets: [], created_at: new Date() };
+	return { sets: [], created_at: new Date().toJSON() };
 }
 
 /** Add a set to a workout. */
