@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { workout } from '$lib/stores';
-	import { set_utils } from '$lib/utils';
+	import { set_utils, gun_utils } from '$lib/utils';
 	import { Button } from '$lib/components';
 
 	const KEY = 'test-workouts/v1';
@@ -41,20 +41,7 @@
 		($workout = { created_at: JSON.stringify(new Date()), sets: [set_utils.create(0, 'null')] });
 	const reset = () => create();
 	const finish = () => {
-		// First, we get our users' workouts node.
-		const userRef = gun.get(KEY).get(user.is.pub);
-		// Then we unpack our workout, Gun does not support saving arrays.
-		const { sets, ...rest } = $workout;
-		// Create the necessary workout node, we'll attach sets to it later.
-		const workoutRef = userRef.set(rest);
-		sets.forEach((set) => {
-			// Here we attach sets and then modifiers, again because Array.
-			const { modifiers, ...rest } = set;
-			const setRef = workoutRef.get('sets').set(rest);
-			modifiers.forEach((modifier) => {
-				setRef.get('modifiers').set(modifier);
-			});
-		});
+		gun_utils.workout.add(gun, user.is.pub, $workout);
 		$workout = null;
 	};
 

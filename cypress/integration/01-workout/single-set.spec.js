@@ -3,9 +3,6 @@
 describe('Create, edit, and discard single set.', () => {
 	it('can start a workout', () => {
 		cy.visit('/workout');
-		// Before the site finishes rendering,
-		// we disable the start workout button.
-		cy.contains('Start Workout').should('be.disabled');
 		// This waits for it to be enabled, then clicks it.
 		cy.contains('Start Workout').click();
 		// Which should create a set and add a workout.
