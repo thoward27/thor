@@ -32,5 +32,6 @@ describe('Create account, sign out, sign back in.', () => {
 		cy.get('#alias').type(USERNAME);
 		cy.get('#password').type(PASSWORD);
 		cy.contains('Log in').click();
+		cy.get('.message').should('not.exist');
 	});
 });
