@@ -8,6 +8,7 @@ describe('Create account, sign out, sign back in.', () => {
 		cy.viewport('macbook-11');
 		cy.visit('/');
 		cy.contains('Sign in').click();
+		cy.url().should('include', '/auth/signin');
 		cy.get('#alias').type(USERNAME);
 		cy.get('#password').type(PASSWORD);
 		cy.contains('Log in').click();
@@ -16,6 +17,7 @@ describe('Create account, sign out, sign back in.', () => {
 	it('can register', () => {
 		cy.viewport('macbook-11');
 		cy.contains('Sign up').click();
+		cy.url().should('include', '/auth/signup')
 		cy.get('#alias').type(USERNAME);
 		cy.get('#password').type(PASSWORD);
 		cy.get('#repeat').type(PASSWORD);
@@ -33,5 +35,7 @@ describe('Create account, sign out, sign back in.', () => {
 		cy.get('#password').type(PASSWORD);
 		cy.contains('Log in').click();
 		cy.get('.message').should('not.exist');
+		cy.contains('Sign out').click({ force: true });
+		cy.contains('Sign in').should('exist');
 	});
 });
