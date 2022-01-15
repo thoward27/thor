@@ -33,6 +33,7 @@
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.34",
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
+    "cypress": "^9.2.1",
     "postcss-preset-env": "^7.2.3",
     "sass": "^1.48.0",
     "vite": "^2.7.12",
