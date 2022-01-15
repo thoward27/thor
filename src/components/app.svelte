@@ -33,7 +33,7 @@
 
 
   <!-- Your main view, should have "view-main" class -->
-  <View main class="safe-areas" url="/" />
+  <View main browserHistory class="safe-areas" url="/" />
 
 
   <!-- Popup -->
