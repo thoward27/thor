@@ -1,0 +1,20 @@
+{
+  "cwd": "/Users/thomashoward/Scratch/thor-fitness",
+  "type": [
+    "web",
+    "pwa"
+  ],
+  "name": "Thor Fitness",
+  "framework": "svelte",
+  "template": "split-view",
+  "bundler": "vite",
+  "cssPreProcessor": "scss",
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkTheme": true,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false
+}
